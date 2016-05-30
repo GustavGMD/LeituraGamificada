@@ -17,15 +17,30 @@ public class Player : Unit
     }
     public override int GetAttributeDefense()
     {
-        return baseDefense;
+        int __itemSum = 0;
+        for (int i = 0; i < equippedItem.Length; i++)
+        {
+            __itemSum += equippedItem[i].defense;
+        }
+        return baseDefense + __itemSum;
     }
     public override int GetAttributeAgility()
     {
-        return baseAgility;
+        int __itemSum = 0;
+        for (int i = 0; i < equippedItem.Length; i++)
+        {
+            __itemSum += equippedItem[i].agility;
+        }
+        return baseAgility + __itemSum;
     }
     public override int GetAttributeStamina()
     {
-        return baseStamina;
+        int __itemSum = 0;
+        for (int i = 0; i < equippedItem.Length; i++)
+        {
+            __itemSum += equippedItem[i].stamina;
+        }
+        return baseStamina + __itemSum;
     }
     public override int GetAttributeCurrentHP()
     {
