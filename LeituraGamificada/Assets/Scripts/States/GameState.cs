@@ -27,7 +27,7 @@ public class GameState : MonoBehaviour {
 
     public virtual void Enable()
     {
-
+        Debug.Log("Enabling State");
     }
 
     public virtual void Disable()

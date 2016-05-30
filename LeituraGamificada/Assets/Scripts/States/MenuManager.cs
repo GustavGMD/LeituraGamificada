@@ -10,12 +10,12 @@ public class MenuManager : GameState
     public Button inventoryButton;    
 
     public override void Initialize () {
-        fightButton.onClick.AddListener(delegate ()
+        fightButton.onClick.AddListener(delegate
         {
             ChangeState(StateName.COMBAT);
         });
 
-        inventoryButton.onClick.AddListener(delegate ()
+        inventoryButton.onClick.AddListener(delegate
         {
             ChangeState(StateName.INVENTORY);
         });

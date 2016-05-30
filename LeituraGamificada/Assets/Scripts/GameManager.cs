@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; i < states.Length; i++)
         {
             states[i].Initialize();
+            states[i].onStateChange += delegate(GameState.StateName p_state)
+            {
+                ChangeGameState(p_state);
+            };
         }
     }
 	
@@ -30,8 +34,10 @@ public class GameManager : MonoBehaviour {
 
         for (int i = 0; i < states.Length; i++)
         {
+            Debug.Log("Procurando novo estado");
             if (states[i].state == p_newGameState)
             {
+                Debug.Log("Encontrou estado");
                 states[i].Enable();
                 currentStateIndex = i;
             }

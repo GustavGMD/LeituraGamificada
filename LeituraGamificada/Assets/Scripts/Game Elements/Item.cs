@@ -8,57 +8,57 @@ namespace Custom
 
         public enum ItemTipo
         {
-            ARMA,
-            ARMADURA
+            WEAPON,
+            ARMOR
         }
 
         public enum ItemElemento
         {
-            FOGO,
-            GELO,
-            ELETRICIDADE,
-            VENENO
+            FIRE,
+            ICE,
+            ELETRICITY,
+            POISON
         }
 
-        public string nome;
-        public int paginasTotal;
-        public int paginasLidas;
-        public int capitulosTotal;
-        public int capitulosLidos;
-        public int nivelBase;
+        public string name;
+        public int pagesTotal;
+        public int pagesRead;
+        public int chaptersTotal;
+        public int chaptersRead;
+        public int baseLevel;
 
-        public ItemTipo tipo;
-        public int ataque;
-        public int defesa;
-        public int agilidade;
-        public int estamina;
-        public ItemElemento elemento;
+        public ItemTipo type;
+        public int attack;
+        public int defense;
+        public int agility;
+        public int stamina;
+        public ItemElemento element;
 
-        public int indiceVisual = 0;
+        public int visualIndex = 0;
 
 
-        private bool habilidadeLiberada = false;
+        private bool abilityReleased = false;
 
-        private static int valorGeradorAtributo = 10;
+        private static int atributeGeneratingValue = 10;
 
         public static Item GenerateNewItem(string p_nome, int p_paginasTotal, int p_paginasLidas, int p_capitulosTotal, int p_capitulosLidos, int p_nivelBase)
         {
             Item __tempItem = new Item();
             Random.seed = p_nome.GetHashCode();
 
-            __tempItem.nome = p_nome;
-            __tempItem.paginasTotal = p_paginasTotal;
-            __tempItem.paginasLidas = p_paginasLidas;
-            __tempItem.capitulosTotal = p_capitulosTotal;
-            __tempItem.capitulosLidos = p_capitulosLidos;
-            __tempItem.nivelBase = p_nivelBase;
+            __tempItem.name = p_nome;
+            __tempItem.pagesTotal = p_paginasTotal;
+            __tempItem.pagesRead = p_paginasLidas;
+            __tempItem.chaptersTotal = p_capitulosTotal;
+            __tempItem.chaptersRead = p_capitulosLidos;
+            __tempItem.baseLevel = p_nivelBase;
 
-            __tempItem.tipo = (ItemTipo)(Random.Range(0, System.Enum.GetNames(typeof(ItemTipo)).Length));
-            __tempItem.elemento = (ItemElemento)(Random.Range(0, System.Enum.GetNames(typeof(ItemElemento)).Length));
-            __tempItem.ataque = Random.Range((p_nivelBase - 1) * valorGeradorAtributo, p_nivelBase * valorGeradorAtributo);
-            __tempItem.defesa = Random.Range((p_nivelBase - 1) * valorGeradorAtributo, p_nivelBase * valorGeradorAtributo);
-            __tempItem.agilidade = Random.Range((p_nivelBase - 1) * valorGeradorAtributo, p_nivelBase * valorGeradorAtributo);
-            __tempItem.estamina = Random.Range((p_nivelBase - 1) * valorGeradorAtributo, p_nivelBase * valorGeradorAtributo);
+            __tempItem.type = (ItemTipo)(Random.Range(0, System.Enum.GetNames(typeof(ItemTipo)).Length));
+            __tempItem.element = (ItemElemento)(Random.Range(0, System.Enum.GetNames(typeof(ItemElemento)).Length));
+            __tempItem.attack = Random.Range((p_nivelBase - 1) * atributeGeneratingValue, p_nivelBase * atributeGeneratingValue);
+            __tempItem.defense = Random.Range((p_nivelBase - 1) * atributeGeneratingValue, p_nivelBase * atributeGeneratingValue);
+            __tempItem.agility = Random.Range((p_nivelBase - 1) * atributeGeneratingValue, p_nivelBase * atributeGeneratingValue);
+            __tempItem.stamina = Random.Range((p_nivelBase - 1) * atributeGeneratingValue, p_nivelBase * atributeGeneratingValue);
 
             return __tempItem;
         }        
