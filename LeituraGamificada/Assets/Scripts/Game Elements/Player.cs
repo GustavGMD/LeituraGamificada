@@ -6,6 +6,11 @@ public class Player : Unit
     
     public Custom.Item[] equippedItem;
 
+    public void Start()
+    {
+        equippedItem = new Custom.Item[0];
+    }
+
     public override int GetAttributeAttack()
     {
         int __itemSum = 0;

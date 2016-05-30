@@ -13,11 +13,14 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; i < states.Length; i++)
         {
             states[i].Initialize();
+            states[i].Disable();
             states[i].onStateChange += delegate(GameState.StateName p_state)
             {
                 ChangeGameState(p_state);
             };
         }
+
+        states[currentStateIndex].Enable();
     }
 	
 	// Update is called once per frame
@@ -31,13 +34,12 @@ public class GameManager : MonoBehaviour {
         {
             if (states[i].state == currentState) states[i].Disable();
         }
+        currentState = p_newGameState;
 
         for (int i = 0; i < states.Length; i++)
         {
-            Debug.Log("Procurando novo estado");
             if (states[i].state == p_newGameState)
             {
-                Debug.Log("Encontrou estado");
                 states[i].Enable();
                 currentStateIndex = i;
             }
