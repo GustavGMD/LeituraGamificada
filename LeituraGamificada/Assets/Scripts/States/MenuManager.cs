@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class MenuManager : GameState
 {
-
     public Canvas menuCanvas;
     public Button fightButton;
     public Button inventoryButton;    
@@ -38,5 +37,4 @@ public class MenuManager : GameState
 
         menuCanvas.gameObject.SetActive(false);
     }
-    
 }
