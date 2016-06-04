@@ -1,21 +1,41 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class InventoryManager : GameState
 {
 	public Canvas inventoryCanvas;
-	public Button menuButton;
+	public Button backButton;
 
-	public override void Initialize () {
+	GameObject inventoryPanel;
+	GameObject slotPanel;
+	public GameObject inventorySlot;
+	public GameObject inventoryItem;
 
-		menuButton.onClick.AddListener(delegate
+	int slotAmount;
+	public List<Custom.Item> items = new List<Custom.Item>();
+	public List<GameObject> slots = new List<GameObject>();
+
+	public override void Initialize()
+	{
+		backButton.onClick.AddListener(delegate
 		{
-			ChangeState(StateName.MENU);
+				ChangeState(StateName.MENU);
 		});
+
+		slotAmount = 16;
+		inventoryPanel = GameObject.Find ("InventoryPanel");
+		slotPanel = inventoryPanel.transform.FindChild("SlotPanel").gameObject;
+		/*for(int i=0;i<slotAmount;i++)
+		{
+			slots.Add (Instantiate (inventorySlot));
+			slots [i].transform.SetParent (slotPanel.transform);
+		}*/
 	}
 
-	public override void Update () {
+	public override void Update()
+	{
 
 	}
 

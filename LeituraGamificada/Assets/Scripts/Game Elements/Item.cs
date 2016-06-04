@@ -5,7 +5,6 @@ namespace Custom
 {
     public class Item
     {
-
         public enum ItemTipo
         {
             WEAPON,
@@ -21,6 +20,7 @@ namespace Custom
         }
 
         public string name;
+		public int id;
         public int pagesTotal;
         public int pagesRead;
         public int chaptersTotal;
@@ -41,12 +41,13 @@ namespace Custom
 
         private static int atributeGeneratingValue = 10;
 
-        public static Item GenerateNewItem(string p_nome, int p_paginasTotal, int p_paginasLidas, int p_capitulosTotal, int p_capitulosLidos, int p_nivelBase)
+		public static Item GenerateNewItem(string p_nome, int p_id, int p_paginasTotal, int p_paginasLidas, int p_capitulosTotal, int p_capitulosLidos, int p_nivelBase)
         {
             Item __tempItem = new Item();
             Random.seed = p_nome.GetHashCode();
 
             __tempItem.name = p_nome;
+			__tempItem.id = p_id;
             __tempItem.pagesTotal = p_paginasTotal;
             __tempItem.pagesRead = p_paginasLidas;
             __tempItem.chaptersTotal = p_capitulosTotal;
