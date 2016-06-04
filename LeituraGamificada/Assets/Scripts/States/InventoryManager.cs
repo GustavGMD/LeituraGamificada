@@ -37,9 +37,6 @@ public class InventoryManager : GameState
 			slots [i].transform.SetParent (slotPanel.transform);
 			slots[i].transform.localScale = new Vector2(2, 2);
 		}
-
-		AddItem (1);
-		AddItem (2);
 	}
 
 	public void AddItem(int id)
@@ -52,7 +49,7 @@ public class InventoryManager : GameState
 				items [i] = itemToAdd;
 				GameObject itemObj = Instantiate (inventoryItem);
 				itemObj.transform.SetParent (slots[i].transform);
-				itemObj.transform.position = Vector2.zero;
+				itemObj.transform.position = itemObj.transform.parent.position;
 				itemObj.transform.localScale = new Vector2 (1, 1);
 				itemObj.GetComponent<Image> ().sprite = itemToAdd.Sprite;
 				itemObj.name = itemToAdd.name;
