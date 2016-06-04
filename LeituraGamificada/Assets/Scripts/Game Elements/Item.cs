@@ -20,7 +20,7 @@ namespace Custom
         }
 
         public string name;
-		public int id;
+		public int id = -1;
         public int pagesTotal;
         public int pagesRead;
         public int chaptersTotal;
@@ -35,6 +35,8 @@ namespace Custom
         public ItemElemento element;
 
         public int visualIndex = 0;
+
+		public Sprite Sprite;
 
 
         private bool abilityReleased = false;
@@ -53,6 +55,7 @@ namespace Custom
             __tempItem.chaptersTotal = p_capitulosTotal;
             __tempItem.chaptersRead = p_capitulosLidos;
             __tempItem.baseLevel = p_nivelBase;
+			__tempItem.Sprite = Resources.Load<Sprite>("Sprites/Items/cursorSword_gold");
 
             __tempItem.type = (ItemTipo)(Random.Range(0, System.Enum.GetNames(typeof(ItemTipo)).Length));
             __tempItem.element = (ItemElemento)(Random.Range(0, System.Enum.GetNames(typeof(ItemElemento)).Length));
@@ -62,6 +65,6 @@ namespace Custom
             __tempItem.stamina = Random.Range((p_nivelBase - 1) * atributeGeneratingValue, p_nivelBase * atributeGeneratingValue);
 
             return __tempItem;
-        }        
-    }    
+        }
+    }
 }
