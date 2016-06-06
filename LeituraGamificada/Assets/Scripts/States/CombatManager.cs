@@ -43,7 +43,7 @@ public class CombatManager : GameState
             //IA improvisada
             if(enemy.GetAttributeCurrentAP() > 1)
             {
-                if (Random.value > 0.1) TryAttack(enemy, player);
+                if (Random.value < 0.01) TryAttack(enemy, player);
             }
             
         }
