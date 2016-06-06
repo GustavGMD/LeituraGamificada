@@ -5,11 +5,10 @@ using System.Collections.Generic;
 public class Player : Unit
 {
     
-    public List<Custom.Item> equippedItem;
+    public List<Custom.Item> equippedItem = new List<Custom.Item>();
 
     public void Start()
     {
-        equippedItem = new List<Custom.Item>();
     }
 
     public override int GetAttributeAttack()
@@ -56,5 +55,4 @@ public class Player : Unit
     {
         return currentAP;
     }
-
 }

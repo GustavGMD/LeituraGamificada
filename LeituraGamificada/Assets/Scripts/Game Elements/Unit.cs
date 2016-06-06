@@ -3,18 +3,18 @@ using System.Collections;
 
 public class Unit : MonoBehaviour {
 
-    public int level;
-    public int baseAttack;
-    public int baseDefense;
-    public int baseAgility;
-    public int baseStamina;
+    public int level = 0;
+    public int baseAttack = 0;
+    public int baseDefense = 0;
+    public int baseAgility = 0;
+    public int baseStamina = 0;
 
-    public int totalHP;
-    public int currentHP;
-    public int totalAP;
-    public float currentAP;
+    public int totalHP = 0;
+    public int currentHP = 0;
+    public int totalAP = 0;
+    public float currentAP = 0;
 
-    private float _APIncrementRatio = 0.25f; //per second, depends on Agility
+    protected float _APIncrementRatio = 0.25f; //per second, depends on Agility
 
     public virtual int GetAttributeAttack()
     {
@@ -51,7 +51,7 @@ public class Unit : MonoBehaviour {
 
     public virtual void IncreseAP()
     {
-        currentAP += _APIncrementRatio * Time.deltaTime;
+        currentAP += (_APIncrementRatio * GetAttributeAgility()/10) * Time.deltaTime;
         if (currentAP > totalAP) currentAP = totalAP;
     }
 
@@ -69,7 +69,7 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    public virtual void InitializeAttributes(int p_level, int p_baseAttack, int p_baseDefense, int p_baseAgility, int p_baseStamina, int p_totalHP, int p_totalAP)
+    public virtual void InitializeAttributes(int p_level, int p_baseAttack, int p_baseDefense, int p_baseAgility, int p_baseStamina, int p_totalHP)
     {
         level = p_level;
         baseAttack = p_baseAttack;
@@ -77,10 +77,27 @@ public class Unit : MonoBehaviour {
         baseAgility = p_baseAgility;
         baseStamina = p_baseStamina;
         totalHP = p_totalHP;
-        totalAP = p_totalAP;
+        totalAP = (int)((float)GetAttributeStamina()/10);
 
         currentHP = totalHP;
         currentAP = 0;
-        _APIncrementRatio = (float)baseAgility / 100;
+    }
+
+    public virtual void LevelUp()
+    {
+        level++;
+        baseAttack += 20;
+        baseDefense += 10;
+        baseAgility += 2;
+        baseStamina += 1;
+        totalHP += 20;
+        currentHP = totalHP;
+        currentAP = 0;
+    }
+
+    public virtual void ReadyForCombat()
+    {
+        currentHP = totalHP;
+        currentAP = 0;
     }
 }
