@@ -1,20 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : Unit
 {
     
-    public Custom.Item[] equippedItem;
+    public List<Custom.Item> equippedItem;
 
     public void Start()
     {
-        equippedItem = new Custom.Item[0];
+        equippedItem = new List<Custom.Item>();
     }
 
     public override int GetAttributeAttack()
     {
         int __itemSum = 0;
-        for (int i = 0; i < equippedItem.Length; i++)
+        for (int i = 0; i < equippedItem.Count; i++)
         {
             __itemSum += equippedItem[i].attack;
         }
@@ -23,7 +24,7 @@ public class Player : Unit
     public override int GetAttributeDefense()
     {
         int __itemSum = 0;
-        for (int i = 0; i < equippedItem.Length; i++)
+        for (int i = 0; i < equippedItem.Count; i++)
         {
             __itemSum += equippedItem[i].defense;
         }
@@ -32,7 +33,7 @@ public class Player : Unit
     public override int GetAttributeAgility()
     {
         int __itemSum = 0;
-        for (int i = 0; i < equippedItem.Length; i++)
+        for (int i = 0; i < equippedItem.Count; i++)
         {
             __itemSum += equippedItem[i].agility;
         }
@@ -41,7 +42,7 @@ public class Player : Unit
     public override int GetAttributeStamina()
     {
         int __itemSum = 0;
-        for (int i = 0; i < equippedItem.Length; i++)
+        for (int i = 0; i < equippedItem.Count; i++)
         {
             __itemSum += equippedItem[i].stamina;
         }

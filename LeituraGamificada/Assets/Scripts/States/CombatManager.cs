@@ -95,6 +95,11 @@ public class CombatManager : GameState
             //apply damage
             if (p_defender.ReceiveDamage(CalculateDamage(p_attacker, p_defender)))
             {
+                if(p_defender == enemy)
+                {
+                    //player level up
+                }
+
                 //game over
                 ChangeState(StateName.MENU);
             }
