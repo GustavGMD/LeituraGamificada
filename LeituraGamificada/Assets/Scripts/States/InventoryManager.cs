@@ -6,21 +6,27 @@ using UnityEngine.UI;
 public class InventoryManager : GameState
 {
 	public Canvas inventoryCanvas;
-	public Button backButton;
+	public Button backMenu;
+	public Button newBookButton;
 
+	public GameObject createItemPanel;
 	public GameObject inventoryPanel;
 	public GameObject slotPanel;
-	public ItemManager itemManagerRef;
 	public GameObject inventorySlot;
 	public GameObject inventoryItem;
 
+	public ItemManager itemManagerRef;
+
 	int slotAmount;
+
 	public List<Custom.Item> items = new List<Custom.Item>();
 	public List<GameObject> slots = new List<GameObject>();
 
 	public override void Initialize()
 	{
-		backButton.onClick.AddListener (delegate {
+		createItemPanel.SetActive (false);
+
+		backMenu.onClick.AddListener (delegate {
 			ChangeState (StateName.MENU);
 		});
 
@@ -34,6 +40,11 @@ public class InventoryManager : GameState
 		}
 	}
 
+	public override void Update()
+	{
+
+	}
+
 	public void AddItem(int id)
 	{
 		Custom.Item itemToAdd = itemManagerRef.FindbyID (id);
@@ -43,6 +54,7 @@ public class InventoryManager : GameState
 			{
 				items [i] = itemToAdd;
 				GameObject itemObj = Instantiate (inventoryItem);
+				itemObj.GetComponent<ItemData> ().item = itemToAdd;
 				itemObj.transform.SetParent (slots[i].transform);
 				itemObj.transform.position = itemObj.transform.parent.position;
 				itemObj.transform.localScale = new Vector2 (1, 1);
@@ -51,11 +63,23 @@ public class InventoryManager : GameState
 				break;
 			}
 		}
+
+		Back ();
 	}
 
-	public override void Update()
+	public void NewBook()
 	{
-
+		slotPanel.SetActive (false);
+		createItemPanel.SetActive (true);
+		newBookButton.gameObject.SetActive (false);
+		backMenu.gameObject.SetActive (false);
+	}
+	public void Back()
+	{
+		slotPanel.SetActive (true);
+		createItemPanel.SetActive (false);
+		newBookButton.gameObject.SetActive (true);
+		backMenu.gameObject.SetActive (true);
 	}
 
 	public override void Enable()
