@@ -8,9 +8,9 @@ public class InventoryManager : GameState
 	public Canvas inventoryCanvas;
 	public Button backButton;
 
-	GameObject inventoryPanel;
-	GameObject slotPanel;
-	ItemManager itemManagerRef;
+	public GameObject inventoryPanel;
+	public GameObject slotPanel;
+	public ItemManager itemManagerRef;
 	public GameObject inventorySlot;
 	public GameObject inventoryItem;
 
@@ -20,16 +20,11 @@ public class InventoryManager : GameState
 
 	public override void Initialize()
 	{
-		backButton.onClick.AddListener(delegate
-		{
-				ChangeState(StateName.MENU);
+		backButton.onClick.AddListener (delegate {
+			ChangeState (StateName.MENU);
 		});
 
-		itemManagerRef = GetComponent<ItemManager> ();
-
 		slotAmount = 16;
-		inventoryPanel = GameObject.Find ("InventoryPanel");
-		slotPanel = inventoryPanel.transform.FindChild("SlotPanel").gameObject;
 		for(int i=0;i<slotAmount;i++)
 		{
 			items.Add (new Custom.Item ());
