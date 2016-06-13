@@ -8,13 +8,10 @@ public class ItemData : MonoBehaviour {
 
 	public event Action<int> onClick;
 
-	public InventoryManager inventoryManagerRef;
-
 	public Custom.Item item;
 
 	public void Start()
 	{
-		inventoryManagerRef = GameObject.Find ("InventoryManager").GetComponent<InventoryManager>();
 		GetComponent<Button> ().onClick.AddListener(delegate {
 			Debug.Log("Clicked");
 			if(onClick != null) onClick(item.id);

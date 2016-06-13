@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 public class InventoryManager : GameState
 {
+	public Player playerRef;
+
 	public Canvas inventoryCanvas;
 	public Button backMenu;
 	public Button newBookButton;
 
 	public GameObject createItemPanel;
+	public GameObject itemStatsPanel;
 	public GameObject inventoryPanel;
 	public GameObject slotPanel;
 	public GameObject inventorySlot;
@@ -19,12 +22,21 @@ public class InventoryManager : GameState
 
 	int slotAmount;
 
+	int idAtual;
+
 	public List<Custom.Item> items = new List<Custom.Item>();
 	public List<GameObject> slots = new List<GameObject>();
+
+	public Text titulo;
+	public Text attack;
+	public Text defense;
+	public Text agility;
+	public Text stamina;
 
 	public override void Initialize()
 	{
 		createItemPanel.SetActive (false);
+		itemStatsPanel.SetActive (false);
 
 		backMenu.onClick.AddListener (delegate {
 			ChangeState (StateName.MENU);
@@ -38,11 +50,6 @@ public class InventoryManager : GameState
 			slots [i].transform.SetParent (slotPanel.transform);
 			slots[i].transform.localScale = new Vector2(2, 2);
 		}
-	}
-
-	public override void Update()
-	{
-
 	}
 
 	public void AddItem(int id)
@@ -63,13 +70,26 @@ public class InventoryManager : GameState
 				itemObj.GetComponent<ItemData>().onClick += delegate(int p_int) 
 				{
 					//Debug.Log("CHamando método do inventoryManager: " + p_int);
-					Stats();
+					idAtual = p_int;
+					Stats(p_int);
 				};
 				break;
 			}
 		}
 
 		Back ();
+	}
+
+	public void EquipItem()
+	{
+		if(playerRef.equippedItem.Count < 2 && !playerRef.equippedItem.Contains(itemManagerRef.FindbyID(idAtual)))
+		{
+			playerRef.equippedItem.Add (itemManagerRef.FindbyID(idAtual));
+		}
+	}
+	public void UnequipItem()
+	{
+		playerRef.equippedItem.Remove (itemManagerRef.FindbyID (idAtual));
 	}
 
 	public void NewBook()
@@ -83,14 +103,22 @@ public class InventoryManager : GameState
 	{
 		slotPanel.SetActive (true);
 		createItemPanel.SetActive (false);
+		itemStatsPanel.SetActive (false);
 		newBookButton.gameObject.SetActive (true);
 		backMenu.gameObject.SetActive (true);
 	}
-	public void Stats()
+	public void Stats(int id)
 	{
 		slotPanel.SetActive (false);
+		itemStatsPanel.SetActive (true);
 		newBookButton.gameObject.SetActive (false);
 		backMenu.gameObject.SetActive (false);
+
+		titulo.text = itemManagerRef.FindbyID (id).name;
+		attack.text = itemManagerRef.FindbyID (id).attack.ToString();
+		defense.text = itemManagerRef.FindbyID (id).defense.ToString();
+		agility.text = itemManagerRef.FindbyID (id).agility.ToString();
+		stamina.text = itemManagerRef.FindbyID (id).stamina.ToString();
 	}
 
 	public override void Enable()
