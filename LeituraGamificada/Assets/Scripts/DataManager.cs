@@ -10,7 +10,8 @@ public class DataManager : MonoBehaviour {
     {
         CONTAINS_SAVED_DATA,
         NUMBER_OF_ITEMS,
-        ITEM
+        ITEM,
+        PLAYER
     }
 
     enum InfoItem
@@ -28,6 +29,15 @@ public class DataManager : MonoBehaviour {
         AGILITY,
         STAMINA,
         ELEMENT
+    }
+
+    enum InfoPlayer
+    {
+        LEVEL,
+        ATTACK,
+        DEFENSE,
+        AGILITY,
+        STAMINA
     }
 
     public static void SaveItems(List<Custom.Item> p_itemList)
@@ -52,7 +62,6 @@ public class DataManager : MonoBehaviour {
             SaveItemAttribute(i, InfoItem.ELEMENT, (int)p_itemList[i].element);
         }
     }
-
     static public List<Custom.Item> LoadItems()
     {
         List<Custom.Item> __items = new List<Custom.Item>();
@@ -87,23 +96,51 @@ public class DataManager : MonoBehaviour {
 
     static void SaveItemAttribute(int p_index, InfoItem p_attribute, int p_value)
     {
-        string __key = InfoName.ITEM.ToString() + p_index.ToString() + p_attribute.ToString(); ;
+        string __key = InfoName.ITEM.ToString() + p_index.ToString() + p_attribute.ToString();
         PlayerPrefs.SetInt(__key, p_value);
     }
     static void SaveItemAttribute(int p_index, InfoItem p_attribute, string p_value)
     {
-        string __key = InfoName.ITEM.ToString() + p_index.ToString() + p_attribute.ToString(); ;
+        string __key = InfoName.ITEM.ToString() + p_index.ToString() + p_attribute.ToString();
         PlayerPrefs.SetString(__key, p_value);
     }
 
     static int LoadItemAttributeInt(int p_index, InfoItem p_attribute)
     {
-        string __key = InfoName.ITEM.ToString() + p_index.ToString() + p_attribute.ToString(); ;
+        string __key = InfoName.ITEM.ToString() + p_index.ToString() + p_attribute.ToString();
         return PlayerPrefs.GetInt(__key);
     }
     static string LoadItemAttributeString(int p_index, InfoItem p_attribute)
     {
-        string __key = InfoName.ITEM.ToString() + p_index.ToString() + p_attribute.ToString(); ;
+        string __key = InfoName.ITEM.ToString() + p_index.ToString() + p_attribute.ToString();
         return PlayerPrefs.GetString(__key);
+    }
+
+    public static void SavePlayer(Player p_player)
+    {
+        SavePlayerAttribute(InfoPlayer.LEVEL, p_player.level);
+        SavePlayerAttribute(InfoPlayer.ATTACK, p_player.baseAttack);
+        SavePlayerAttribute(InfoPlayer.DEFENSE, p_player.baseDefense);
+        SavePlayerAttribute(InfoPlayer.AGILITY, p_player.baseAgility);
+        SavePlayerAttribute(InfoPlayer.STAMINA, p_player.baseStamina);
+    }
+    public static void LoadPlayer(Player p_player, List<Custom.Item> p_items)
+    {
+        p_player.level = LoadPlayerAttribute(InfoPlayer.LEVEL);
+        p_player.baseAttack = LoadPlayerAttribute(InfoPlayer.ATTACK);
+        p_player.baseDefense = LoadPlayerAttribute(InfoPlayer.DEFENSE);
+        p_player.baseAgility = LoadPlayerAttribute(InfoPlayer.AGILITY);
+        p_player.baseStamina = LoadPlayerAttribute(InfoPlayer.STAMINA);
+    }
+
+    static void SavePlayerAttribute(InfoPlayer p_attribute, int p_value)
+    {
+        string __key = InfoName.PLAYER.ToString() + p_attribute.ToString(); 
+        PlayerPrefs.SetInt(__key, p_value);
+    }
+    static int LoadPlayerAttribute(InfoPlayer p_attribute)
+    {
+        string __key = InfoName.PLAYER.ToString() + p_attribute.ToString();
+        return PlayerPrefs.GetInt(__key);
     }
 }
