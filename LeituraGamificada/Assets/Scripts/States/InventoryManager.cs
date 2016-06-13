@@ -60,6 +60,11 @@ public class InventoryManager : GameState
 				itemObj.transform.localScale = new Vector2 (1, 1);
 				itemObj.GetComponent<Image> ().sprite = itemToAdd.Sprite;
 				itemObj.name = itemToAdd.name;
+				itemObj.GetComponent<ItemData>().onClick += delegate(int p_int) 
+				{
+					//Debug.Log("CHamando método do inventoryManager: " + p_int);
+					Stats();
+				};
 				break;
 			}
 		}
@@ -80,6 +85,12 @@ public class InventoryManager : GameState
 		createItemPanel.SetActive (false);
 		newBookButton.gameObject.SetActive (true);
 		backMenu.gameObject.SetActive (true);
+	}
+	public void Stats()
+	{
+		slotPanel.SetActive (false);
+		newBookButton.gameObject.SetActive (false);
+		backMenu.gameObject.SetActive (false);
 	}
 
 	public override void Enable()
