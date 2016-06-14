@@ -10,6 +10,8 @@ public class InventoryManager : GameState
 	public Canvas inventoryCanvas;
 	public Button backMenu;
 	public Button newBookButton;
+	public Button equipButton;
+	public Button unequipButton;
 
 	public GameObject createItemPanel;
 	public GameObject itemStatsPanel;
@@ -71,7 +73,7 @@ public class InventoryManager : GameState
 				{
 					//Debug.Log("CHamando método do inventoryManager: " + p_int);
 					idAtual = p_int;
-					Stats(p_int);
+					Stats(idAtual);
 				};
 				break;
 			}
@@ -86,33 +88,33 @@ public class InventoryManager : GameState
 		{
 			playerRef.equippedItem.Add (itemManagerRef.FindbyID(idAtual));
 		}
+		equipButton.gameObject.SetActive (false);
+		unequipButton.gameObject.SetActive (true);
+
 	}
 	public void UnequipItem()
 	{
 		playerRef.equippedItem.Remove (itemManagerRef.FindbyID (idAtual));
+		equipButton.gameObject.SetActive (true);
+		unequipButton.gameObject.SetActive (false);
 	}
 
-	public void NewBook()
-	{
-		slotPanel.SetActive (false);
-		createItemPanel.SetActive (true);
-		newBookButton.gameObject.SetActive (false);
-		backMenu.gameObject.SetActive (false);
-	}
-	public void Back()
-	{
-		slotPanel.SetActive (true);
-		createItemPanel.SetActive (false);
-		itemStatsPanel.SetActive (false);
-		newBookButton.gameObject.SetActive (true);
-		backMenu.gameObject.SetActive (true);
-	}
 	public void Stats(int id)
 	{
 		slotPanel.SetActive (false);
 		itemStatsPanel.SetActive (true);
 		newBookButton.gameObject.SetActive (false);
 		backMenu.gameObject.SetActive (false);
+		if (playerRef.equippedItem.Contains(itemManagerRef.FindbyID(id)))
+		{
+			equipButton.gameObject.SetActive (false);
+			unequipButton.gameObject.SetActive (true);
+		}
+		else
+		{
+			equipButton.gameObject.SetActive (true);
+			unequipButton.gameObject.SetActive (false);
+		}
 
 		titulo.text = itemManagerRef.FindbyID (id).name;
 		attack.text = itemManagerRef.FindbyID (id).attack.ToString();
@@ -133,5 +135,21 @@ public class InventoryManager : GameState
 		base.Disable();
 
 		inventoryCanvas.gameObject.SetActive(false);
+	}
+
+	public void Back()
+	{
+		slotPanel.SetActive (true);
+		createItemPanel.SetActive (false);
+		itemStatsPanel.SetActive (false);
+		newBookButton.gameObject.SetActive (true);
+		backMenu.gameObject.SetActive (true);
+	}
+	public void NewBook()
+	{
+		slotPanel.SetActive (false);
+		createItemPanel.SetActive (true);
+		newBookButton.gameObject.SetActive (false);
+		backMenu.gameObject.SetActive (false);
 	}
 }
