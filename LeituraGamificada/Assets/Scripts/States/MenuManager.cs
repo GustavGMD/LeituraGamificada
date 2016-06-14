@@ -11,6 +11,8 @@ public class MenuManager : GameState
     public Player player;
     public Enemy enemy;
 
+	public Text level;
+
     public override void Initialize () {
         fightButton.onClick.AddListener(delegate
         {
@@ -39,6 +41,7 @@ public class MenuManager : GameState
         base.Enable();
 
         menuCanvas.gameObject.SetActive(true);
+		level.text = player.level.ToString();
     }
 
     public override void Disable()

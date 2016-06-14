@@ -90,7 +90,6 @@ public class InventoryManager : GameState
 		}
 		equipButton.gameObject.SetActive (false);
 		unequipButton.gameObject.SetActive (true);
-
 	}
 	public void UnequipItem()
 	{

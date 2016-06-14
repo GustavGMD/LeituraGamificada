@@ -7,7 +7,7 @@ public class ItemManager : MonoBehaviour {
 
 	public InventoryManager InventoryManagerRef;
 	public List<Custom.Item> items = new List<Custom.Item>();
-	public int id;
+	private int id;
 
 	public Player PlayerRef;
 
