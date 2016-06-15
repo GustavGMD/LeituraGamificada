@@ -14,6 +14,9 @@ public class MenuManager : GameState
 	public Text level;
 
     public override void Initialize () {
+
+        DataManager.LoadPlayer(player);
+
         fightButton.onClick.AddListener(delegate
         {
             ChangeState(StateName.COMBAT);

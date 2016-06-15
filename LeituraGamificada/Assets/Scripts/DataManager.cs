@@ -124,7 +124,7 @@ public class DataManager : MonoBehaviour {
         SavePlayerAttribute(InfoPlayer.AGILITY, p_player.baseAgility);
         SavePlayerAttribute(InfoPlayer.STAMINA, p_player.baseStamina);
     }
-    public static void LoadPlayer(Player p_player, List<Custom.Item> p_items)
+    public static void LoadPlayer(Player p_player)
     {
         p_player.level = LoadPlayerAttribute(InfoPlayer.LEVEL);
         p_player.baseAttack = LoadPlayerAttribute(InfoPlayer.ATTACK);

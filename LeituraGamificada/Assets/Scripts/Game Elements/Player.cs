@@ -55,4 +55,10 @@ public class Player : Unit
     {
         return currentAP;
     }
+
+    public override void LevelUp()
+    {
+        base.LevelUp();
+        DataManager.SavePlayer(this);
+    }
 }
