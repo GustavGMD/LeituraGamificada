@@ -35,15 +35,8 @@ public class InventoryManager : GameState
 	public Text agility;
 	public Text stamina;
 
-	public override void Initialize()
+	public void Awake()
 	{
-		createItemPanel.SetActive (false);
-		itemStatsPanel.SetActive (false);
-
-		backMenu.onClick.AddListener (delegate {
-			ChangeState (StateName.MENU);
-		});
-
 		slotAmount = 16;
 		for(int i=0;i<slotAmount;i++)
 		{
@@ -54,9 +47,19 @@ public class InventoryManager : GameState
 		}
 	}
 
-	public void AddItem(int id)
+	public override void Initialize()
 	{
-		Custom.Item itemToAdd = itemManagerRef.FindbyID (id);
+		createItemPanel.SetActive (false);
+		itemStatsPanel.SetActive (false);
+
+		backMenu.onClick.AddListener (delegate {
+			ChangeState (StateName.MENU);
+		});
+	}
+
+	public void AddItem(Custom.Item item)
+	{
+		Custom.Item itemToAdd = item;
 		for(int i=0;i<items.Count;i++)
 		{
 			if(items[i].id == -1)
@@ -78,22 +81,22 @@ public class InventoryManager : GameState
 				break;
 			}
 		}
-
+		DataManager.SaveItems (items);
 		Back ();
 	}
 
 	public void EquipItem()
 	{
-		if(playerRef.equippedItem.Count < 2 && !playerRef.equippedItem.Contains(itemManagerRef.FindbyID(idAtual)))
+		if(playerRef.equippedItem.Count < 2 && !playerRef.equippedItem.Contains(FindbyID(idAtual)))
 		{
-			playerRef.equippedItem.Add (itemManagerRef.FindbyID(idAtual));
+			playerRef.equippedItem.Add (FindbyID(idAtual));
 		}
 		equipButton.gameObject.SetActive (false);
 		unequipButton.gameObject.SetActive (true);
 	}
 	public void UnequipItem()
 	{
-		playerRef.equippedItem.Remove (itemManagerRef.FindbyID (idAtual));
+		playerRef.equippedItem.Remove (FindbyID (idAtual));
 		equipButton.gameObject.SetActive (true);
 		unequipButton.gameObject.SetActive (false);
 	}
@@ -104,7 +107,7 @@ public class InventoryManager : GameState
 		itemStatsPanel.SetActive (true);
 		newBookButton.gameObject.SetActive (false);
 		backMenu.gameObject.SetActive (false);
-		if (playerRef.equippedItem.Contains(itemManagerRef.FindbyID(id)))
+		if (playerRef.equippedItem.Contains(FindbyID(id)))
 		{
 			equipButton.gameObject.SetActive (false);
 			unequipButton.gameObject.SetActive (true);
@@ -115,11 +118,11 @@ public class InventoryManager : GameState
 			unequipButton.gameObject.SetActive (false);
 		}
 
-		titulo.text = itemManagerRef.FindbyID (id).name;
-		attack.text = itemManagerRef.FindbyID (id).attack.ToString();
-		defense.text = itemManagerRef.FindbyID (id).defense.ToString();
-		agility.text = itemManagerRef.FindbyID (id).agility.ToString();
-		stamina.text = itemManagerRef.FindbyID (id).stamina.ToString();
+		titulo.text = FindbyID (id).name;
+		attack.text = FindbyID (id).attack.ToString();
+		defense.text = FindbyID (id).defense.ToString();
+		agility.text = FindbyID (id).agility.ToString();
+		stamina.text = FindbyID (id).stamina.ToString();
 	}
 
 	public override void Enable()
@@ -150,5 +153,41 @@ public class InventoryManager : GameState
 		createItemPanel.SetActive (true);
 		newBookButton.gameObject.SetActive (false);
 		backMenu.gameObject.SetActive (false);
+	}
+
+	public Custom.Item FindbyID(int id)
+	{
+		for(int i=0;i<items.Count;i++)
+		{
+			if(items[i].id == id)
+				return items[i];
+		}
+		return null;
+	}
+
+	public void FillInventory(Custom.Item item)
+	{
+		Custom.Item itemToAdd = item;
+		for(int i=0;i<items.Count;i++)
+		{
+			if(items[i].id == -1)
+			{
+				items [i] = itemToAdd;
+				GameObject itemObj = Instantiate (inventoryItem);
+				itemObj.GetComponent<ItemData> ().item = itemToAdd;
+				itemObj.transform.SetParent (slots[i].transform);
+				itemObj.transform.position = itemObj.transform.parent.position;
+				itemObj.transform.localScale = new Vector2 (1, 1);
+				itemObj.GetComponent<Image> ().sprite = itemToAdd.Sprite;
+				itemObj.name = itemToAdd.name;
+				itemObj.GetComponent<ItemData>().onClick += delegate(int p_int) 
+				{
+					//Debug.Log("CHamando método do inventoryManager: " + p_int);
+					idAtual = p_int;
+					Stats(idAtual);
+				};
+				break;
+			}
+		}
 	}
 }

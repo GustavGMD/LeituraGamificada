@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
 //this is a static class used for saving a loading data from Unity's PlayerPrefs
 public class DataManager : MonoBehaviour {
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class MenuManager : GameState
@@ -12,10 +13,15 @@ public class MenuManager : GameState
     public Enemy enemy;
 
 	public Text level;
+	public ItemManager ItemManagerRef;
+	public InventoryManager InventoryManagerRef;
 
     public override void Initialize () {
 
+		//DataManager.SaveItems (InventoryManagerRef.items);
         DataManager.LoadPlayer(player);
+
+		//InventoryManagerRef.SetItemsList (DataManager.LoadItems());
 
         fightButton.onClick.AddListener(delegate
         {
@@ -45,6 +51,8 @@ public class MenuManager : GameState
 
         menuCanvas.gameObject.SetActive(true);
 		level.text = player.level.ToString();
+
+		ItemManagerRef.SetItemsList (DataManager.LoadItems());
     }
 
     public override void Disable()
