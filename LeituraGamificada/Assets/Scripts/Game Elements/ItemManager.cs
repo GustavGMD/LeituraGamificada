@@ -7,7 +7,7 @@ public class ItemManager : MonoBehaviour {
 
 	public InventoryManager InventoryManagerRef;
 	public List<Custom.Item> items = new List<Custom.Item>();
-	public int id;
+	private int id;
 
 	public Player PlayerRef;
 
@@ -25,8 +25,7 @@ public class ItemManager : MonoBehaviour {
 	public void CreateItem()
 	{
 		Custom.Item __tempItem = Custom.Item.GenerateNewItem(titulo.text, id, int.Parse(paginasTotais.text), int.Parse(paginasLidas.text), int.Parse(capitulosTotais.text), int.Parse(capitulosLidos.text), PlayerRef.level);
-		Debug.Log ("Item criado com nome: " + __tempItem.name + " com paginas totais de: " + __tempItem.pagesTotal);
-		//items.Add (__tempItem);
+		//Debug.Log ("Item criado com nome: " + __tempItem.name + " com paginas totais de: " + __tempItem.pagesTotal);
 		InventoryManagerRef.AddItem (__tempItem);
 		id++;
 	}

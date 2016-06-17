@@ -5,22 +5,18 @@ using UnityEngine.UI;
 
 public class InventoryManager : GameState
 {
+	public Canvas inventoryCanvas;
+
 	public Player playerRef;
 
-	public Canvas inventoryCanvas;
-	public Button backMenu;
-	public Button newBookButton;
-	public Button equipButton;
-	public Button unequipButton;
+	public ItemManager itemManagerRef;
+	public ScreenNavigation screenNavigationRef;
 
-	public GameObject createItemPanel;
-	public GameObject itemStatsPanel;
-	public GameObject inventoryPanel;
-	public GameObject slotPanel;
+	public Button backMenu;
+
 	public GameObject inventorySlot;
 	public GameObject inventoryItem;
-
-	public ItemManager itemManagerRef;
+	public GameObject slotPanel;
 
 	int slotAmount;
 
@@ -34,6 +30,11 @@ public class InventoryManager : GameState
 	public Text defense;
 	public Text agility;
 	public Text stamina;
+
+	public Text pagesTotal;
+	public Text pagesRead;
+	public Text chaptersTotal;
+	public Text chaptersRead;
 
 	public void Awake()
 	{
@@ -49,9 +50,6 @@ public class InventoryManager : GameState
 
 	public override void Initialize()
 	{
-		createItemPanel.SetActive (false);
-		itemStatsPanel.SetActive (false);
-
 		backMenu.onClick.AddListener (delegate {
 			ChangeState (StateName.MENU);
 		});
@@ -82,40 +80,50 @@ public class InventoryManager : GameState
 			}
 		}
 		DataManager.SaveItems (items);
-		Back ();
+		screenNavigationRef.Back ();
 	}
 
+	public void ApplyEdit()
+	{
+		FindbyID (idAtual).pagesRead = int.Parse(pagesRead.text);
+		FindbyID (idAtual).chaptersRead = int.Parse(chaptersRead.text);
+
+		screenNavigationRef.Back ();
+	}
+	public void EditItem()
+	{
+		screenNavigationRef.EditScreen ();
+
+		pagesTotal.text = " / " + FindbyID (idAtual).pagesTotal.ToString();
+		chaptersTotal.text = " / " + FindbyID (idAtual).chaptersTotal.ToString();
+	}
 	public void EquipItem()
 	{
 		if(playerRef.equippedItem.Count < 2 && !playerRef.equippedItem.Contains(FindbyID(idAtual)))
 		{
 			playerRef.equippedItem.Add (FindbyID(idAtual));
+
+			screenNavigationRef.EquipUnequipScreen (true);
 		}
-		equipButton.gameObject.SetActive (false);
-		unequipButton.gameObject.SetActive (true);
 	}
 	public void UnequipItem()
 	{
 		playerRef.equippedItem.Remove (FindbyID (idAtual));
-		equipButton.gameObject.SetActive (true);
-		unequipButton.gameObject.SetActive (false);
+
+		screenNavigationRef.EquipUnequipScreen (false);
 	}
 
 	public void Stats(int id)
 	{
-		slotPanel.SetActive (false);
-		itemStatsPanel.SetActive (true);
-		newBookButton.gameObject.SetActive (false);
-		backMenu.gameObject.SetActive (false);
+		screenNavigationRef.StatsScreen ();
+
 		if (playerRef.equippedItem.Contains(FindbyID(id)))
 		{
-			equipButton.gameObject.SetActive (false);
-			unequipButton.gameObject.SetActive (true);
+			screenNavigationRef.EquipUnequipScreen (true);
 		}
 		else
 		{
-			equipButton.gameObject.SetActive (true);
-			unequipButton.gameObject.SetActive (false);
+			screenNavigationRef.EquipUnequipScreen (false);
 		}
 
 		titulo.text = FindbyID (id).name;
@@ -137,22 +145,6 @@ public class InventoryManager : GameState
 		base.Disable();
 
 		inventoryCanvas.gameObject.SetActive(false);
-	}
-
-	public void Back()
-	{
-		slotPanel.SetActive (true);
-		createItemPanel.SetActive (false);
-		itemStatsPanel.SetActive (false);
-		newBookButton.gameObject.SetActive (true);
-		backMenu.gameObject.SetActive (true);
-	}
-	public void NewBook()
-	{
-		slotPanel.SetActive (false);
-		createItemPanel.SetActive (true);
-		newBookButton.gameObject.SetActive (false);
-		backMenu.gameObject.SetActive (false);
 	}
 
 	public Custom.Item FindbyID(int id)
@@ -182,7 +174,6 @@ public class InventoryManager : GameState
 				itemObj.name = itemToAdd.name;
 				itemObj.GetComponent<ItemData>().onClick += delegate(int p_int) 
 				{
-					//Debug.Log("CHamando método do inventoryManager: " + p_int);
 					idAtual = p_int;
 					Stats(idAtual);
 				};
