@@ -137,6 +137,23 @@ public class InventoryManager : GameState
 		stamina.text = FindbyID (id).stamina.ToString();
 	}
 
+	public void NextItemStats()
+	{
+		if (FindbyID (idAtual + 1).id != -1)
+		{
+			Stats (idAtual + 1);
+			idAtual += 1;
+		}
+	}
+	public void AnteriorItemStats()
+	{
+		if (FindbyID (idAtual - 1).id != -1)
+		{
+			Stats (idAtual - 1);
+			idAtual -= 1;
+		}
+	}
+
 	public override void Enable()
 	{
 		base.Enable();
