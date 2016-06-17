@@ -92,6 +92,7 @@ public class InventoryManager : GameState
         items[items.IndexOf(FindbyID(idAtual))] = __temp;
 
         Stats(idAtual);
+        DataManager.SaveItems(items);
 		screenNavigationRef.Back ();
 	}
 	public void EditItem()
