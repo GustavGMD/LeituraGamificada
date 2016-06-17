@@ -85,9 +85,13 @@ public class InventoryManager : GameState
 
 	public void ApplyEdit()
 	{
-		FindbyID (idAtual).pagesRead = int.Parse(pagesRead.text);
-		FindbyID (idAtual).chaptersRead = int.Parse(chaptersRead.text);
+        Custom.Item __temp = FindbyID(idAtual);
+        __temp.pagesRead = int.Parse(pagesRead.text);
+        __temp.chaptersRead = int.Parse(chaptersRead.text);
+        __temp = Custom.Item.GenerateNewItem(__temp.name, __temp.id, __temp.pagesTotal, __temp.pagesRead, __temp.chaptersTotal, __temp.chaptersRead, __temp.baseLevel);
+        items[items.IndexOf(FindbyID(idAtual))] = __temp;
 
+        Stats(idAtual);
 		screenNavigationRef.Back ();
 	}
 	public void EditItem()
