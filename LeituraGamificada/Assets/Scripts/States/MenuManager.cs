@@ -39,6 +39,8 @@ public class MenuManager : GameState
         }
 
         GenerateNewEnemy();
+
+		ItemManagerRef.SetItemsList (DataManager.LoadItems());
 	}
 	
 	public override void Update () {
@@ -51,8 +53,6 @@ public class MenuManager : GameState
 
         menuCanvas.gameObject.SetActive(true);
 		level.text = player.level.ToString();
-
-		ItemManagerRef.SetItemsList (DataManager.LoadItems());
     }
 
     public override void Disable()
