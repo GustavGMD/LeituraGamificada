@@ -13,7 +13,6 @@ public class MenuManager : GameState
     public Enemy enemy;
 
 	public Text playerLevel;
-	public Text enemyLevel;
 
 	public ItemManager ItemManagerRef;
 	public InventoryManager InventoryManagerRef;
@@ -55,7 +54,6 @@ public class MenuManager : GameState
 
         menuCanvas.gameObject.SetActive(true);
 		playerLevel.text = player.level.ToString();
-		enemyLevel.text = enemy.level.ToString();
     }
 
     public override void Disable()
