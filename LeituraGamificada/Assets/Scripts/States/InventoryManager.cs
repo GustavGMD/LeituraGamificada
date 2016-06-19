@@ -86,8 +86,28 @@ public class InventoryManager : GameState
 	public void ApplyEdit()
 	{
         Custom.Item __temp = FindbyID(idAtual);
-        __temp.pagesRead = int.Parse(pagesRead.text);
-        __temp.chaptersRead = int.Parse(chaptersRead.text);
+        int __newPagesRead = int.Parse(pagesRead.text);
+        int __newChaptersRead = int.Parse(chaptersRead.text);
+
+        if (__newPagesRead > __temp.pagesTotal)
+        {
+            __newPagesRead = __temp.pagesTotal;
+        }
+        else if (__newPagesRead < 0)
+        {
+            __newPagesRead = 0;
+        }
+        if (__newChaptersRead > __temp.chaptersTotal)
+        {
+            __newChaptersRead = __temp.chaptersTotal;
+        }
+        else if (__newChaptersRead < 0)
+        {
+            __newChaptersRead = 0;
+        }
+
+        __temp.pagesRead = __newPagesRead;
+        __temp.chaptersRead = __newChaptersRead;
         __temp = Custom.Item.GenerateNewItem(__temp.name, __temp.id, __temp.pagesTotal, __temp.pagesRead, __temp.chaptersTotal, __temp.chaptersRead, __temp.baseLevel);
         items[items.IndexOf(FindbyID(idAtual))] = __temp;
 
