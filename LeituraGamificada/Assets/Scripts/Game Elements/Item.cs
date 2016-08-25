@@ -56,7 +56,7 @@ namespace Custom
             __tempItem.chaptersTotal = p_capitulosTotal;
             __tempItem.chaptersRead = p_capitulosLidos;
             __tempItem.baseLevel = p_nivelBase;
-            __tempItem.Sprite = Resources.Load<Sprite>("Sprites/Items/cursorSword_gold");
+            __tempItem.Sprite = Resources.Load<Sprite>("Sprites/Items/cursorSword_silver");
 
             __tempItem.type = (ItemTipo)(Random.Range(0, System.Enum.GetNames(typeof(ItemTipo)).Length));
             __tempItem.element = (ItemElemento)(Random.Range(0, System.Enum.GetNames(typeof(ItemElemento)).Length));

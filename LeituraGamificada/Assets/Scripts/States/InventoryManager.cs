@@ -36,6 +36,8 @@ public class InventoryManager : GameState
 	public Text chaptersTotal;
 	public Text chaptersRead;
 
+	public GameObject PlayerSprite;
+
 	public void Awake()
 	{
 		slotAmount = 16;
@@ -129,6 +131,8 @@ public class InventoryManager : GameState
 			playerRef.equippedItem.Add (FindbyID(idAtual));
 
 			screenNavigationRef.EquipUnequipScreen (true);
+
+			PlayerSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Player/player1");
 		}
 	}
 	public void UnequipItem()
@@ -136,6 +140,8 @@ public class InventoryManager : GameState
 		playerRef.equippedItem.Remove (FindbyID (idAtual));
 
 		screenNavigationRef.EquipUnequipScreen (false);
+
+		//PlayerSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Player/player2");
 	}
 
 	public void Stats(int id)
